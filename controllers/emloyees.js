@@ -3,7 +3,7 @@ const { prisma } = require("../prisma/prisma-client");
 /*
 * @route GET /api/employees
 * @desc Получение всех сотрудников
-* @access Public
+* @access Private
 */
 const all = async (req, res) => {
     try {
@@ -17,18 +17,28 @@ const all = async (req, res) => {
 }
 
 /*
-* @route GET /api/employees/singe
-* @desc Получение одного сотрудника
-* @access Public
+* @route GET /api/employees/:id
+* @desc Получение сотрудника
+* @access Private
 */
-const single = async (req, res) => {
-    console.log('get singe employees')
+const employee = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const employee = await prisma.employee.findUnique({
+            where: {
+                id
+            }
+        });
+        res.status(200).json(employee);
+    } catch (error) {
+        res.status(500).json({message: 'Неудалось получить сотрудника'})
+    }
 }
 
 /*
 * @route POST /api/employees/add
 * @desc Добавление сотрудника
-* @access Public
+* @access Private
 */
 const add = async (req, res) => {
     try {
@@ -55,28 +65,50 @@ const add = async (req, res) => {
 }
 
 /*
-* @route POST /api/employees/remove
-* @desc Логин
-* @access Public
+* @route POST /api/employees/remove/:id
+* @desc Удаление сотрудника
+* @access Private
 */
 const remove = async (req, res) => {
-    console.log('remove employee')
+    const {id} = req.body;
+    try{
+        await prisma.employee.delete({
+            where: {
+                id,
+            }
+        });
+        res.status(204).json('ок');
+    } catch (error){
+        return res.status(500).json({message: "Неудалось удалить сотрудника"})
+    }
 }
 
 
 /*
-* @route POST /api/employees/edit
-* @desc Логин
-* @access Public
+* @route PUT /api/employees/edit/:id
+* @desc Редактирование сотрудника
+* @access Private
 */
 const edit = async (req, res) => {
-    console.log('edit employee')
+    const data = req.body;
+    const id = data.id;
+    try{
+        await prisma.employee.update({
+            where: {
+                id
+            },
+            data
+        });
+        res.status(204).json({message: 'Ок'});
+    } catch (error){
+        return res.status(500).json({message: "Неудалось изменить сотрудника"})
+    }
 }
 
 module.exports = {
     all,
     add,
-    single,
+    employee,
     remove,
     edit
 }
