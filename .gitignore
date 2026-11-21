@@ -2,3 +2,5 @@ node_modules/
 .idea/
 .env
 generated/prisma/
+/prisma/migrations/20261111112438_apply_after_reset/migration.sql
+/prisma/migrations/migration_lock.toml
