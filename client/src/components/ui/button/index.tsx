@@ -1,5 +1,6 @@
 import {Button as ButtonAnt, Form} from 'antd'
-import type {ReactNode} from "react";
+import type {CSSProperties, ReactNode} from "react";
+import styles from './index.module.css';
 
 type Props = {
     children?: ReactNode;
@@ -10,6 +11,8 @@ type Props = {
     loading?: boolean;
     shape?: "default" | "circle" | "round" | "square" | undefined;
     icon?: ReactNode;
+    style?: CSSProperties | undefined;
+    className?: string;
 };
 
 export const Button = ({
@@ -21,9 +24,11 @@ export const Button = ({
                            loading,
                            shape,
                            icon,
+                           style,
+                           className,
                        }: Props) => {
     return (
-        <Form.Item>
+        <Form.Item className={styles.formItem}>
             <ButtonAnt
                 htmlType={htmlType}
                 type={type}
@@ -32,6 +37,8 @@ export const Button = ({
                 loading={loading}
                 shape={shape}
                 icon={icon}
+                style={style}
+                className={className}
             >
                 {children}
             </ButtonAnt>
