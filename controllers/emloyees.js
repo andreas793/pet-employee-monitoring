@@ -57,7 +57,7 @@ const add = async (req, res) => {
 
         return res.status(201).json(employee)
     } catch (error) {
-        console.error('add employee error:', error);
+        console.error('add employees error:', error);
         res.status(500).json({
             message: 'Неудалось добавить сотрудника',
         })

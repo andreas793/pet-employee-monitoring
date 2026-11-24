@@ -2,12 +2,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import {Paths} from "./paths.ts";
 import {Login} from "./pages/login";
 import {Register} from "./pages/register";
-import {Employee} from "./pages/employee";
+import {Employees} from "./pages/employees";
+import {AddEmployee} from "./pages/add-employee";
 
 const router = [
     {
         path: Paths.home,
-        element: <Employee />
+        element: <Employees />
     },
     {
         path: Paths.login,
@@ -16,7 +17,12 @@ const router = [
     {
         path: Paths.register,
         element: <Register />
+    },
+    {
+        path: Paths.employeeAdd,
+        element: <AddEmployee />,
     }
+
 ]
 
 function App() {
